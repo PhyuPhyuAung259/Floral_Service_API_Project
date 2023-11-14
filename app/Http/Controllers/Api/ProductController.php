@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Helpers\ResponseHelper;
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 
@@ -16,10 +17,10 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-        $product=Product::latest()->get();
-        return ProductResource::collection($product);
+    { 
+        $products = Product::with('images')->get();
+
+        return response()->json(['products' => $products,'message' => 'Successfully uploaded','status'=>true],200);
         
     }
 
@@ -50,9 +51,19 @@ class ProductController extends Controller
         $product->category_id=$request->category_id;
         //$product->status=$request->status;
         $product->save();
-        if($images=$request->images){
-            foreach($images as $image){
-                $product->addMedia($image)->toMediaCollection('images');
+        if($request->has('image')){
+            $image=$request->image;
+            foreach($image as $key=>$value){
+                $name=time().$key.'.'.$value->getClientOriginalExtension();
+                $path=public_path('upload');
+                $value->move($path,$name);
+
+                $image=new Image();
+                $image->name=$name;
+                $image->path=$path;
+                $image->product_id=$product->id;
+                $image->save();
+
             }
         }
 
