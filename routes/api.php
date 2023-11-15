@@ -5,8 +5,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EventController;
-use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\Api\Sub_categoryController;
 
 /*
@@ -24,7 +25,10 @@ use App\Http\Controllers\Api\Sub_categoryController;
 
 Route::post('register', [AuthController::class,'register']);
 Route::post('login', [AuthController::class,'login']);
+Route::get('user_list',[AuthController::class,'user_list']);
 Route::apiResource('category', CategoryController::class);
 Route::apiResource('sub_category', Sub_categoryController::class);
 Route::apiResource('event', EventController::class);
 Route::apiResource('product', ProductController::class);
+Route::get('search/product/{string}',[ProductController::class,'search']);
+Route::post('checkout',[CheckoutController::class,'checkout']);

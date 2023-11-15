@@ -20,7 +20,7 @@ class ProductController extends Controller
     { 
         $products = Product::with('images')->get();
 
-        return response()->json(['products' => $products,'message' => 'Successfully uploaded','status'=>true],200);
+        return response()->json(['products' => $products,'message' => 'Product List','status'=>true],200);
         
     }
 
@@ -129,5 +129,12 @@ class ProductController extends Controller
       $product=Product::find($id);
       $product->delete();
       return ResponseHelper::success($product->id,"Successfully Deleted");
+    }
+
+    public function search($string)
+    {
+        return Product::where('name', 'like', '%' . $string . '%')
+        ->orWhere('product_detail', 'like', '%' . $string . '%')
+        ->get();
     }
 }

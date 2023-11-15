@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Log;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,7 +31,7 @@ class AuthController extends Controller
         $token =$user->createToken('laravel9');
         return response()->json([
             'status'=>200,
-            'message'=>'Successfully Login',
+            'message'=>'Successfully Register',
             'token'=>$token->plainTextToken
         ]);
         
@@ -49,6 +50,11 @@ class AuthController extends Controller
         }
         
         return response()->json(['status' => 401, 'message' => 'Unauthorized']);
+    }
+
+    public function user_list(Request $request){
+        $user=User::all();
+        return ResponseHelper::success($user,'user list');
     }
 }
 

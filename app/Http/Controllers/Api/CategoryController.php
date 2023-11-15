@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         $category=category::all();
-        return ResponseHelper::success($category,'Index Method');
+        return ResponseHelper::success($category,'category list');
     }
 
     /**
