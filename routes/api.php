@@ -5,6 +5,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EventController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CheckoutController;
@@ -32,3 +33,5 @@ Route::apiResource('event', EventController::class);
 Route::apiResource('product', ProductController::class);
 Route::get('search/product/{string}',[ProductController::class,'search']);
 Route::post('checkout',[CheckoutController::class,'checkout']);
+Route::get('ordercheck/{id}/{type}',[OrderController::class,'order_check']);
+Route::get('orderlist',[OrderController::class,'order_list']);

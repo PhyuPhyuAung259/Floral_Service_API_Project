@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderDetails;
@@ -16,7 +17,7 @@ class CheckoutController extends Controller
        $order=new Order();
      // $order->user_id= auth()->user();
         $order->user_id=$request->user_id;
-        $order->order_date=$request->order_date;
+        $order->order_date=Carbon::now();
         $order->delivery_address=$request->delivery_address;
         $order->delivery_fees=$request->delivery_fees;
         $order->grand_total=$request->grand_total;
